@@ -1,4 +1,5 @@
-import Lenis from '../js/lenis.min.js';
+// Import Lenis from global scope since it's added there by the library
+const Lenis = globalThis.Lenis;
 
 export const initSmoothScrolling = () => {
   const lenis = new Lenis({ lerp: 0.1 });
