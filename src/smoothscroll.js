@@ -1,3 +1,5 @@
+import Lenis from '../js/lenis.min.js';
+
 export const initSmoothScrolling = () => {
   const lenis = new Lenis({ lerp: 0.1 });
 
