@@ -4,7 +4,7 @@ import { initSmoothScrolling } from './smoothscroll';
 import { GridItem } from './components/GridItem';
 import { Panel } from './components/Panel';
 import { Frame } from './components/Frame';
-import './css/base.css';
+import '../css/base.css';
 
 // Configuration object for animation settings
 const config = {
