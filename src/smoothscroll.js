@@ -1,3 +1,5 @@
+import gsap from 'gsap';
+
 export const initSmoothScrolling = () => {
   const lenis = new globalThis.Lenis({ lerp: 0.1 });
 

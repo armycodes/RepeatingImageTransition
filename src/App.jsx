@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { preloadImages } from './utils';
 import { initSmoothScrolling } from './smoothscroll';
 import { GridItem } from './components/GridItem';
 import { Panel } from './components/Panel';
 import { Frame } from './components/Frame';
 import '../css/base.css';
+import gsap from 'gsap';
 
 // Configuration object for animation settings
 const config = {
@@ -38,6 +39,38 @@ const images = Array.from({ length: 33 }, (_, i) => ({
 
 function App() {
   const gridRef = useRef(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+
+  const handleItemClick = (item) => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentItem(item);
+
+    const panel = document.querySelector('.panel');
+    const panelImg = panel.querySelector('.panel__img');
+    const itemImg = item.querySelector('.grid__item-image');
+
+    gsap.to(panel, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        setIsAnimating(false);
+      }
+    });
+
+    gsap.fromTo(panelImg, 
+      { clipPath: 'inset(100% 0 0 0)' },
+      {
+        clipPath: 'inset(0% 0 0 0)',
+        duration: 1,
+        ease: 'power2.inOut'
+      }
+    );
+
+    panelImg.style.backgroundImage = itemImg.style.backgroundImage;
+  };
 
   useEffect(() => {
     document.documentElement.className = 'js';
@@ -68,6 +101,7 @@ function App() {
             key={image.id}
             image={image}
             config={config}
+            onClick={(e) => handleItemClick(e.currentTarget)}
           />
         ))}
       </div>
